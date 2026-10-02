@@ -21,13 +21,12 @@ if st.session_state["page"] == "Home":
     st.header("Welcome")
     st.write("Choose a section to get started.")
 
-    st.subheader("Learn about the flags")
-    st.write("Read the Australian Museum's information about Aboriginal and Torres Strait Islander flags.")
-    st.link_button(
-        "Open Australian Museum page",
-        "https://australian.museum/learn/cultures/first-nations-collections/cultural-objects/indigenous-australia-flags/",
+    st.subheader("Aboriginal Flag")
+    st.image(
+        "https://media.australian.museum/media/dd/images/Some_image.width-1600.9bc6ad1.jpg",
+        caption="Image: Harold Joseph Thomas © First Nations | Source: Australian Museum",
+        width=480,
     )
-    st.caption("Source: Australian Museum. The Aboriginal Flag image is credited there to Harold Joseph Thomas © First Nations.")
 
     terms_column, translation_column = st.columns(2)
 
