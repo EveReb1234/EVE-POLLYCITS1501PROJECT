@@ -78,7 +78,7 @@ if "page" not in st.session_state:
     st.session_state["page"] = "Home"
 
 st.sidebar.title("Navigation")
-st.sidebar.radio("Choose a view", ["Home", "Terms", "Translation"], key="page")
+st.sidebar.radio("Choose a view", ["Home", "Languages Spoken", "Translation"], key="page")
 
 if st.session_state["page"] == "Home":
     st.markdown(
