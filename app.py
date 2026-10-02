@@ -1,4 +1,36 @@
+import json
+from pathlib import Path
+
 import streamlit as st
+
+from dictionary_builder import OUTPUT_PATH, build_dictionary
+
+
+DICTIONARY_PATH = OUTPUT_PATH
+
+
+@st.cache_data
+def load_dictionary():
+    if not DICTIONARY_PATH.exists():
+        build_dictionary(output_path=DICTIONARY_PATH)
+
+    with open(DICTIONARY_PATH, "r", encoding="utf-8") as file:
+        return json.load(file)
+
+
+def search_dictionary(query):
+    term = (query or "").strip().lower()
+    if not term:
+        return []
+
+    matches = []
+    for item in load_dictionary():
+        english = (item.get("english") or "").lower()
+        noongar = (item.get("noongar") or "").lower()
+        if term in english or term in noongar or english.startswith(term) or noongar.startswith(term):
+            matches.append(item)
+
+    return matches[:10]
 
 
 st.set_page_config(page_title="Noongar Language Explorer", page_icon="📖")
@@ -131,12 +163,19 @@ if st.session_state["page"] == "Home":
         )
 
 elif st.session_state["page"] == "Terms":
-    st.header("Terms")
-    st.text_input("Search terms")
-    st.info("Your approved terms dataset will be displayed here.")
+    st.header("Languages Spoken")
+    st.text_input("Search languages")
+    st.info("This section is for browsing languages spoken in Western Australia.")
 
 else:
     st.header("Translation")
-    st.text_input("Enter a term to search")
-    st.button("Search")
-    st.info("Search results will appear here after you connect your approved dataset.")
+    query = st.text_input("Enter an English word to search")
+    if st.button("Search"):
+        matches = search_dictionary(query)
+        if not matches:
+            st.info("No matching Noongar word was found for that search.")
+        else:
+            for match in matches:
+                st.markdown(f"**{match['english']}** → **{match['noongar']}**")
+    else:
+        st.info("Type an English word, then press Search to find the Noongar translation.")
