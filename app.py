@@ -18,7 +18,8 @@ st.sidebar.title("Navigation")
 st.sidebar.radio("Choose a view", ["Home", "Terms", "Translation"], key="page")
 
 if st.session_state["page"] == "Home":
-    st.header("Welcome")
+    st.header("Wanju / Wanjoo")
+    st.caption("Noongar to English: Welcome")
     st.write("Choose a section to get started.")
 
     st.subheader("Aboriginal Flag")
