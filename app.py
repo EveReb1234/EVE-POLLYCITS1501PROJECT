@@ -6,8 +6,7 @@ st.set_page_config(page_title="Noongar Language Explorer", page_icon="📖")
 st.markdown(
     """
     <style>
-    @media (min-width: 768px) {
-        section[data-testid="stSidebar"] {
+    @media (min-width: 768px)         section[data-testid="stSidebar"] {
             width: 12rem !important;
             min-width: 12rem !important;
             flex-basis: 12rem !important;
@@ -110,10 +109,10 @@ if st.session_state["page"] == "Home":
     terms_column, translation_column = st.columns(2)
 
     with terms_column:
-        st.subheader("Terms")
-        st.write("Browse terms from your selected dataset.")
+        st.subheader("Languages Spoken")
+        st.write("Browse languages spoken in Western Australia")
         st.button(
-            "Open Terms",
+            "Open Languages Spoken",
             on_click=navigate_to,
             args=("Terms",),
             type="primary",
