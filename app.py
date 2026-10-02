@@ -49,19 +49,11 @@ st.markdown(
         margin: 0 0 1rem;
         text-align: center;
     }
-    .home-wave-border {
-        position: fixed;
-        top: 9vh;
-        right: 0;
-        width: 5rem;
-        height: 82vh;
-        pointer-events: none;
-        z-index: 0;
-    }
-    @media (max-width: 900px) {
-        .home-wave-border {
-            display: none;
-        }
+    .home-wave-lines {
+        display: block;
+        width: 100%;
+        height: 4.5rem;
+        margin: 0 auto 0.75rem;
     }
     .stButton button[kind="primary"] {
         background-color: #a83225;
@@ -92,9 +84,10 @@ st.sidebar.radio("Choose a view", ["Home", "Terms", "Translation"], key="page")
 if st.session_state["page"] == "Home":
     st.markdown(
         """
-        <svg class="home-wave-border" viewBox="0 0 100 640" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-            <path d="M100 0 L55 0 C10 40 10 120 55 160 C100 200 100 280 55 320 C10 360 10 440 55 480 C100 520 100 600 55 640 L100 640 Z" fill="#e2bd24" />
-            <path d="M100 0 L82 0 C62 40 62 120 82 160 C100 200 100 280 82 320 C62 360 62 440 82 480 C100 520 100 600 82 640 L100 640 Z" fill="#a83225" />
+        <svg class="home-wave-lines" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path d="M0 24 C120 4 210 44 330 24 S540 4 660 24 S870 44 1000 24" fill="none" stroke="#171717" stroke-width="7" vector-effect="non-scaling-stroke" />
+            <path d="M0 50 C130 72 200 28 330 50 S530 72 660 50 S870 28 1000 50" fill="none" stroke="#a83225" stroke-width="7" vector-effect="non-scaling-stroke" />
+            <path d="M0 78 C130 58 200 98 330 78 S530 58 660 78 S870 98 1000 78" fill="none" stroke="#e2bd24" stroke-width="7" vector-effect="non-scaling-stroke" />
         </svg>
         <div class="noongar-welcome">
             <p class="direction">Noongar to English</p>
