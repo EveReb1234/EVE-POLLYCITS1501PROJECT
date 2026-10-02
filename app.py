@@ -8,11 +8,12 @@ st.markdown(
     <style>
     .noongar-welcome {
         background: #fff7d8;
-        border-left: 6px solid #e2bd24;
+        border-top: 6px solid #e2bd24;
         border-bottom: 3px solid #a83225;
-        border-radius: 0 4px 4px 0;
-        padding: 1rem 1.25rem;
+        border-radius: 4px;
+        padding: 1.25rem;
         margin: 0.5rem 0 1rem;
+        text-align: center;
     }
     .noongar-welcome .direction {
         color: #67502a;
@@ -28,6 +29,18 @@ st.markdown(
     .noongar-welcome .translation {
         color: #30291f;
         margin: 0;
+    }
+    .home-title {
+        color: #30291f;
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin: 0.75rem 0 0.25rem;
+        text-align: center;
+    }
+    .home-caption {
+        color: #67502a;
+        margin: 0 0 1rem;
+        text-align: center;
     }
     .stButton button[kind="primary"] {
         background-color: #a83225;
@@ -52,9 +65,6 @@ def navigate_to(page):
 if "page" not in st.session_state:
     st.session_state["page"] = "Home"
 
-st.title("Noongar Language Explorer")
-st.caption("Explore terms and translations from a published, approved source.")
-
 st.sidebar.title("Navigation")
 st.sidebar.radio("Choose a view", ["Home", "Terms", "Translation"], key="page")
 
@@ -66,6 +76,8 @@ if st.session_state["page"] == "Home":
             <h2>Wanju / Wanjoo</h2>
             <p class="translation">Welcome</p>
         </div>
+        <div class="home-title">Noongar Language Explorer</div>
+        <p class="home-caption">Explore terms and translations from a published, approved source.</p>
         """,
         unsafe_allow_html=True,
     )
