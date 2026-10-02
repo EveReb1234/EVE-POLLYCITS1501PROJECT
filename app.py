@@ -6,6 +6,13 @@ st.set_page_config(page_title="Noongar Language Explorer", page_icon="📖")
 st.markdown(
     """
     <style>
+    @media (min-width: 768px) {
+        section[data-testid="stSidebar"] {
+            width: 12rem !important;
+            min-width: 12rem !important;
+            flex-basis: 12rem !important;
+        }
+    }
     .noongar-welcome {
         background: #fff7d8;
         border-top: 6px solid #e2bd24;
