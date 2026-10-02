@@ -99,7 +99,6 @@ if st.session_state["page"] == "Home":
         """,
         unsafe_allow_html=True,
     )
-    st.write("Choose a section to get started.")
 
     st.subheader("Aboriginal Flag")
     st.image(
