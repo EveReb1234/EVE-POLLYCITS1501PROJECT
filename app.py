@@ -51,10 +51,10 @@ st.markdown(
     }
     .home-wave-border {
         position: fixed;
-        top: 16vh;
+        top: 9vh;
         right: 0;
-        width: 3rem;
-        height: 68vh;
+        width: 5rem;
+        height: 82vh;
         pointer-events: none;
         z-index: 0;
     }
@@ -92,9 +92,9 @@ st.sidebar.radio("Choose a view", ["Home", "Terms", "Translation"], key="page")
 if st.session_state["page"] == "Home":
     st.markdown(
         """
-        <svg class="home-wave-border" viewBox="0 0 52 640" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-            <path d="M52 0 C18 55 18 105 52 160 C86 215 86 265 52 320 C18 375 18 425 52 480 C86 535 86 585 52 640 L52 0 Z" fill="#e2bd24" />
-            <path d="M52 0 C38 55 38 105 52 160 C66 215 66 265 52 320 C38 375 38 425 52 480 C66 535 66 585 52 640 L52 0 Z" fill="#a83225" />
+        <svg class="home-wave-border" viewBox="0 0 100 640" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path d="M100 0 L55 0 C10 40 10 120 55 160 C100 200 100 280 55 320 C10 360 10 440 55 480 C100 520 100 600 55 640 L100 640 Z" fill="#e2bd24" />
+            <path d="M100 0 L82 0 C62 40 62 120 82 160 C100 200 100 280 82 320 C62 360 62 440 82 480 C100 520 100 600 82 640 L100 640 Z" fill="#a83225" />
         </svg>
         <div class="noongar-welcome">
             <p class="direction">Noongar to English</p>
