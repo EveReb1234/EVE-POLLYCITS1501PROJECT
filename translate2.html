@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>English to Noongar Translator</title>
+<style>
+body{margin:0;background:#faf5ec;color:#2b1d14;font-family:Georgia,serif;font-size:16px;line-height:1.5}
+a{color:#b4491f}
+
+/* ---- Title area ---- */
+header{position:relative;text-align:center;color:#fff;padding:44px 16px 0;
+  background:linear-gradient(180deg,#5a1f0c 0%,#a63d16 45%,#e08a3c 85%,#f2c46e 100%);overflow:hidden}
+header .place{font-family:Arial,sans-serif;font-size:12px;letter-spacing:4px;text-transform:uppercase;opacity:.85;margin:0 0 8px}
+header h1{margin:0;font-size:clamp(30px,7vw,50px);letter-spacing:1px;text-shadow:0 2px 6px rgba(0,0,0,.35)}
+header .hello{margin:10px 0 0;font-size:18px;font-style:italic}
+header .hello b{font-style:normal;color:#ffe3a3}
+.sun{position:absolute;right:12%;bottom:46px;width:70px;height:70px;border-radius:50%;
+  background:#ffe9b0;box-shadow:0 0 40px 14px rgba(255,220,140,.55);opacity:.9}
+.hills{display:block;width:100%;height:90px;margin-top:34px;position:relative}
+
+/* ---- Seasons strip ---- */
+.seasons-wrap{max-width:720px;margin:-6px auto 0;padding:0 16px}
+.seasons-title{font-family:Arial,sans-serif;font-size:12px;font-weight:bold;text-transform:uppercase;
+  letter-spacing:1px;color:#7a6757;margin:18px 0 6px}
+#seasons{display:flex;border-radius:10px;overflow:hidden;border:1px solid #e6d9c6}
+.season{flex:1;padding:10px 4px;text-align:center;font-family:Arial,sans-serif}
+.season b{display:block;font-size:13px}
+.season small{display:block;font-size:10px;opacity:.9}
+.season.now{outline:3px solid #2b1d14;outline-offset:-3px}
+@media (max-width:520px){.season b{font-size:11px}.season small{font-size:9px}}
+
+/* ---- Page ---- */
+main{max-width:720px;margin:0 auto;padding:16px}
+.card{background:#fff;border:1px solid #e6d9c6;border-radius:12px;padding:16px;margin-bottom:16px}
+.lbl{font-family:Arial,sans-serif;font-size:12px;font-weight:bold;text-transform:uppercase;color:#7a6757}
+input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18px;border:1px solid #e6d9c6;border-radius:8px}
+#out{margin-top:6px;font-size:22px;min-height:40px}
+.w{display:inline-block;margin:3px 6px 3px 0;padding:4px 10px;border-radius:8px;background:#f3e6d2}
+.w small{display:block;font-family:Arial,sans-serif;font-size:11px;color:#7a6757}
+.miss{background:#fff;border:1px dashed #bbb;color:#888}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #eee;cursor:pointer}
+.row b{color:#b4491f}
+.row span{color:#7a6757;font-family:Arial,sans-serif}
+#all{max-height:400px;overflow-y:auto}
+.note{font-family:Arial,sans-serif;font-size:13px;color:#7a6757}
+.ack{border-left:5px solid #b4491f}
+</style>
+</head>
+<body>
+
+<header>
+  <p class="place">Noongar Boodjar</p>
+  <h1>English to Noongar</h1>
+  <p class="hello"><b>Kaya!</b> Look up animal words in the Noongar language</p>
+  <div class="sun"></div>
+  <svg class="hills" viewBox="0 0 1200 90" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,60 C150,20 300,70 470,45 C640,18 760,70 920,50 C1050,32 1130,48 1200,40 L1200,90 L0,90 Z" fill="#8a3a16" opacity=".55"/>
+    <path d="M0,75 C180,45 330,85 520,65 C700,45 860,88 1040,68 C1120,60 1170,66 1200,62 L1200,90 L0,90 Z" fill="#faf5ec"/>
+  </svg>
+</header>
+
+<div class="seasons-wrap">
+  <div class="seasons-title">The six Noongar seasons</div>
+  <div id="seasons"></div>
+</div>
+
+<main>
+<div class="card">
+<div class="lbl">English word or phrase</div>
+<input id="q" type="text" placeholder="e.g. kangaroo, black snake, emu">
+<div class="lbl" style="margin-top:14px">Noongar</div>
+<div id="out" class="note">Translations will appear here.</div>
+</div>
+<div class="card" id="mbox" style="display:none">
+<div class="lbl">Matching words</div>
+<div id="matches"></div>
+</div>
+<div class="card">
+<div class="lbl" id="count"></div>
+<div id="all"></div>
+</div>
+
+<div class="card ack">
+<div class="lbl">Acknowledgement</div>
+<p style="margin:6px 0 0">This page is made on and about Noongar Boodjar (Noongar Country) in the south-west of Western Australia. We acknowledge the Noongar people as the traditional custodians of this land and the original speakers of this language, and pay respect to Elders past and present.</p>
+</div>
+
+<p class="note">
+Reference: <a href="https://www.northmetrotafe.wa.edu.au/sites/default/files/2020-03/Noongar-Dictionary-Second-Edition.pdf" target="_blank" rel="noopener">Noongar Dictionary, Second Edition (North Metropolitan TAFE)</a>.
+Noongar has several regional varieties and spellings, so please check with Noongar language speakers or a language centre for anything important.
+</p>
+</main>
+
+<script>
+window.onerror = function(msg, src, line){ alert("Error: " + msg + " (line " + line + ")"); };
+
+var DATA = [
+{en:"animal",nm:["barna"]},{en:"ant",nm:["bidit","boololo"]},{en:"banded ant eater",nm:["noombat"]},
+{en:"bandicoot",nm:["kwendu","kwernt","kwinda"]},{en:"bat",nm:["babitj"]},{en:"bell bird",nm:["dirl-dirl"]},
+{en:"black cockatoo",nm:["manatj","ngoorlak"]},{en:"black duck",nm:["ngwonan"]},{en:"black snake",nm:["noorn"]},
+{en:"blow fly",nm:["noordoo"]},{en:"bobtail",nm:["yoorn"]},{en:"bull ant",nm:["kirlar","kirlirl"]},
+{en:"carpet snake",nm:["wakarl"]},{en:"caterpillar",nm:["ngana"]},{en:"cattle",nm:["boolok"]},
+{en:"cobbler",nm:["nyola"]},{en:"red-tailed cockatoo",nm:["yiibi"]},
+{en:"black and white-tailed cockatoo",nm:["ngoolyanak"]},{en:"cow",nm:["boolok","booliyak"]},
+{en:"crayfish",nm:["marron"]},{en:"crow",nm:["wardang"]},{en:"cuckoo",nm:["waaly","djilybarr"]},
+{en:"dingo",nm:["mokiny"]},{en:"dog",nm:["dwert"]},{en:"ducks",nm:["yerderap"]},{en:"eagle",nm:["waalitj"]},
+{en:"hawk",nm:["yelka"]},{en:"echidna",nm:["nyingarn"]},{en:"emu",nm:["waitj","wetj"]},
+{en:"female possum",nm:["koomal"]},{en:"fish",nm:["djildjit"]},{en:"flathead",nm:["nolka"]},
+{en:"flies",nm:["nort"]},{en:"fly",nm:["minga","noort","noordoo"]},
+{en:"frog",nm:["koorni","kooyar","kwdijar kwiyar","kwooyar"]},{en:"garfish",nm:["yelin"]},
+{en:"gecko",nm:["bibdjool"]},{en:"black goanna",nm:["yongki","yoondarn"]},{en:"grasshopper",nm:["djidily"]},
+{en:"horse",nm:["ngort"]},{en:"insect",nm:["nort","noordoo","minga"]},{en:"joey",nm:["nyarnyi"]},
+{en:"kangaroo",nm:["yongka"]},{en:"kookaburra",nm:["kaa-kaa"]},{en:"lice",nm:["kool"]},
+{en:"lizard",nm:["yorndi"]},{en:"blue-tongue lizard",nm:["dilert"]},{en:"frilled dragon lizard",nm:["kalari"]},
+{en:"maggots",nm:["boodjark"]},{en:"magpie",nm:["koolbardi"]},{en:"mallee fowl",nm:["ngawoo"]},
+{en:"marron",nm:["koonak","djilki"]},{en:"mountain duck",nm:["nyimarak"]},
+{en:"mud-lark",nm:["diliboort","koolyabarak"]},{en:"night hawk",nm:["nyoorlam"]},{en:"night owl",nm:["yaartj"]},
+{en:"nightbird",nm:["nyoolang"]},{en:"barn owl",nm:["yoowintj"]},{en:"brown owl",nm:["wiroo","wiroop"]},
+{en:"tawny frogmouth",nm:["djoowi"]},{en:"parakeet",nm:["kawart"]},{en:"pigs",nm:["dordok"]},
+{en:"poisonous snake",nm:["ngibart"]},{en:"porpoise",nm:["kwilena"]},{en:"possum",nm:["ngwir"]},
+{en:"ring tailed possum",nm:["ngwayir"]},{en:"prawns",nm:["yala"]},{en:"puppy",nm:["dwert kooniny"]},
+{en:"purple-crowned lorikeet",nm:["kawoor"]},{en:"bilby",nm:["djalkat"]},{en:"goanna",nm:["kardar"]},
+{en:"rat",nm:["bankot"]},{en:"red kangaroo",nm:["marloo"]},{en:"rock wallaby",nm:["moorang"]},
+{en:"scorpion",nm:["nindjaliny"]},{en:"shark",nm:["kwila"]},{en:"sheep",nm:["kookendjeri"]},
+{en:"skink",nm:["yoolart"]},{en:"brown snake",nm:["dookatj"]},{en:"snapper",nm:["yolka"]},
+{en:"spiders",nm:["kar"]},{en:"spotted goanna",nm:["djorlkoorl"]},{en:"swan",nm:["maali"]},
+{en:"tiger snake",nm:["nornt"]},{en:"long necked tortoise",nm:["booyi"]},{en:"wallaby",nm:["kwoka"]},
+{en:"brush tailed wallaby",nm:["kwer","kwoora"]},{en:"water snake",nm:["maadjit","madjit"]},
+{en:"wattle bird",nm:["dongkarak"]},{en:"wild cat",nm:["djooditj"]},{en:"will wag tail",nm:["djidi-djidi"]}
+];
+
+function get(id){ return document.getElementById(id); }
+
+function clean(s){
+  return s.toLowerCase().replace(/[^a-z0-9 '-]/g, "").replace(/ +/g, " ").replace(/^ | $/g, "");
+}
+
+var lookup = {};
+for (var i = 0; i < DATA.length; i++) { lookup[clean(DATA[i].en)] = DATA[i]; }
+
+/* ---- Six Noongar seasons (current one is highlighted) ---- */
+var SEASONS = [
+  {n:"Birak",m:"Dec-Jan",bg:"#e8a33d",fg:"#2b1d14"},
+  {n:"Bunuru",m:"Feb-Mar",bg:"#c2552b",fg:"#fff"},
+  {n:"Djeran",m:"Apr-May",bg:"#a8743a",fg:"#fff"},
+  {n:"Makuru",m:"Jun-Jul",bg:"#3f6f7a",fg:"#fff"},
+  {n:"Djilba",m:"Aug-Sep",bg:"#6f8f5a",fg:"#fff"},
+  {n:"Kambarang",m:"Oct-Nov",bg:"#d9b84a",fg:"#2b1d14"}
+];
+var BY_MONTH = [0,1,1,2,2,3,3,4,4,5,5,0];
+
+function buildSeasons(){
+  var now = BY_MONTH[new Date().getMonth()], box = get("seasons");
+  for (var i = 0; i < SEASONS.length; i++) {
+    var d = document.createElement("div");
+    d.className = "season" + (i === now ? " now" : "");
+    d.style.background = SEASONS[i].bg;
+    d.style.color = SEASONS[i].fg;
+    var a = document.createElement("b");
+    a.textContent = SEASONS[i].n;
+    var b = document.createElement("small");
+    b.textContent = i === now ? SEASONS[i].m + " (now)" : SEASONS[i].m;
+    d.appendChild(a);
+    d.appendChild(b);
+    box.appendChild(d);
+  }
+}
+
+/* ---- Translator ---- */
+function makeRow(entry){
+  var row = document.createElement("div");
+  row.className = "row";
+  var b = document.createElement("b");
+  b.textContent = entry.nm.join(", ");
+  var s = document.createElement("span");
+  s.textContent = entry.en;
+  row.appendChild(b);
+  row.appendChild(s);
+  row.onclick = function(){
+    get("q").value = entry.en;
+    translate();
+    window.scrollTo(0, 0);
+  };
+  return row;
+}
+
+function makeChip(big, small, missing){
+  var c = document.createElement("span");
+  c.className = missing ? "w miss" : "w";
+  c.appendChild(document.createTextNode(big));
+  var sm = document.createElement("small");
+  sm.textContent = small;
+  c.appendChild(sm);
+  return c;
+}
+
+function translate(){
+  var text = clean(get("q").value);
+  var out = get("out");
+  var box = get("mbox");
+  var list = get("matches");
+  out.innerHTML = "";
+  list.innerHTML = "";
+
+  if (text === "") {
+    out.textContent = "Translations will appear here.";
+    box.style.display = "none";
+    return;
+  }
+
+  var words = text.split(" ");
+  var i = 0;
+  while (i < words.length) {
+    var found = null, used = 0;
+    for (var k = Math.min(4, words.length - i); k >= 1; k--) {
+      var phrase = words.slice(i, i + k).join(" ");
+      if (lookup[phrase]) { found = lookup[phrase]; used = k; break; }
+    }
+    if (found) {
+      out.appendChild(makeChip(found.nm[0], words.slice(i, i + used).join(" "), false));
+      i += used;
+    } else {
+      out.appendChild(makeChip(words[i], "not found", true));
+      i += 1;
+    }
+  }
+
+  var count = 0;
+  for (var j = 0; j < DATA.length; j++) {
+    var name = clean(DATA[j].en), all = true;
+    for (var w = 0; w < words.length; w++) {
+      if (name.indexOf(words[w]) === -1) { all = false; break; }
+    }
+    if (all) { list.appendChild(makeRow(DATA[j])); count++; }
+  }
+  box.style.display = count ? "block" : "none";
+}
+
+function start(){
+  buildSeasons();
+  get("q").oninput = translate;
+  get("q").onkeyup = translate;
+  var sorted = DATA.slice().sort(function(a, b){ return a.en < b.en ? -1 : 1; });
+  var all = get("all");
+  for (var i = 0; i < sorted.length; i++) { all.appendChild(makeRow(sorted[i])); }
+  get("count").textContent = "All " + DATA.length + " words (click one to look it up)";
+}
+start();
+</script>
+</body>
+</html>
