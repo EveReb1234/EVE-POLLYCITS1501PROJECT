@@ -86,8 +86,9 @@ input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18p
 <main>
 <nav class="category-nav" aria-label="Word categories">
 <button class="category-button" type="button" data-category="animals" aria-pressed="true">Animals</button>
-<button class="category-button" type="button" data-category="plants" aria-pressed="false">Plants</button>
+<button class="category-button" type="button" data-category="environment" aria-pressed="false">Environment</button>
 <button class="category-button" type="button" data-category="greetings" aria-pressed="false">Every day language</button>
+<button class="category-button" type="button" data-category="family" aria-pressed="false">Family</button>
 <button class="category-button" type="button" data-category="body-parts" aria-pressed="false">Body parts</button>
 </nav>
 
@@ -108,7 +109,7 @@ input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18p
 </div>
 </section>
 
-<section class="category-panel" data-category-panel="plants" hidden>
+<section class="category-panel" data-category-panel="environment" hidden>
 <div class="card">
 <label class="lbl" for="plants-q">Search Noongar or English</label>
 <input id="plants-q" type="search" placeholder="e.g. grass, jarrah tree, dandelion grass">
@@ -127,6 +128,17 @@ input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18p
 <div class="card">
 <div class="lbl" id="everyday-count"></div>
 <div id="everyday-all"></div>
+</div>
+</section>
+
+<section class="category-panel" data-category-panel="family" hidden>
+<div class="card">
+<label class="lbl" for="family-q">Search Noongar or English</label>
+<input id="family-q" type="search" placeholder="e.g. mother, brother, children">
+</div>
+<div class="card">
+<div class="lbl" id="family-count"></div>
+<div id="family-all"></div>
 </div>
 </section>
 
@@ -213,6 +225,23 @@ var EVERYDAY_DATA = [
   {noongar:"ngal",english:"what"},
   {noongar:"nginap",english:"whose"},
   {noongar:"nindjan",english:"attention / listen"}
+];
+
+var FAMILY_DATA = [
+  {noongar:"ngangk",english:"mother"},
+  {noongar:"muambarl / inamuny",english:"one's own father"},
+  {noongar:"djook",english:"sister / cousin"},
+  {noongar:"djookanka",english:"sisters"},
+  {noongar:"djookin",english:"sister / cousin"},
+  {noongar:"ngooldja",english:"brother / brother-in-law"},
+  {noongar:"ngooritj",english:"brother / sister / cousin"},
+  {noongar:"nobap",english:"child"},
+  {noongar:"nobarat",english:"children"},
+  {noongar:"borong",english:"oldest girl / oldest man"},
+  {noongar:"koolbardayong",english:"relatives"},
+  {noongar:"ngulung",english:"our"},
+  {noongar:"nganyba",english:"my brother"},
+  {noongar:"ngooni",english:"my brother"}
 ];
 
 var PLANTS_DATA = [
@@ -432,6 +461,8 @@ function start(){
   renderWordList(PLANTS_DATA, "plants-q", "plants-all", "plants-count");
   get("everyday-q").oninput = function(){ renderWordList(EVERYDAY_DATA, "everyday-q", "everyday-all", "everyday-count"); };
   renderWordList(EVERYDAY_DATA, "everyday-q", "everyday-all", "everyday-count");
+  get("family-q").oninput = function(){ renderWordList(FAMILY_DATA, "family-q", "family-all", "family-count"); };
+  renderWordList(FAMILY_DATA, "family-q", "family-all", "family-count");
   get("body-parts-q").oninput = function(){ renderWordList(BODY_PARTS_DATA, "body-parts-q", "body-parts-all", "body-parts-count"); };
   renderWordList(BODY_PARTS_DATA, "body-parts-q", "body-parts-all", "body-parts-count");
   get("q").oninput = translate;
