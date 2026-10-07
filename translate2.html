@@ -420,10 +420,13 @@ function renderWordList(entries, queryId, allId, countId){
   var query = clean(get(queryId).value);
   var all = get(allId);
   var count = 0;
+  var sortedEntries = entries.slice().sort(function(a, b){
+    return a.english.localeCompare(b.english, undefined, {sensitivity:"base"});
+  });
   all.innerHTML = "";
 
-  for (var i = 0; i < entries.length; i++) {
-    var entry = entries[i];
+  for (var i = 0; i < sortedEntries.length; i++) {
+    var entry = sortedEntries[i];
     if (query && clean(entry.noongar).indexOf(query) === -1 && clean(entry.english).indexOf(query) === -1) continue;
     var row = document.createElement("div");
     row.className = "row";
@@ -530,7 +533,9 @@ function start(){
   renderWordList(BODY_PARTS_DATA, "body-parts-q", "body-parts-all", "body-parts-count");
   get("q").oninput = translate;
   get("q").onkeyup = translate;
-  var sorted = DATA.slice().sort(function(a, b){ return a.en < b.en ? -1 : 1; });
+  var sorted = DATA.slice().sort(function(a, b){
+    return a.en.localeCompare(b.en, undefined, {sensitivity:"base"});
+  });
   var all = get("all");
   for (var i = 0; i < sorted.length; i++) { all.appendChild(makeRow(sorted[i])); }
   get("count").textContent = "All " + DATA.length + " words (click one to look it up)";
