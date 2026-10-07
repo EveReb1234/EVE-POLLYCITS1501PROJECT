@@ -50,6 +50,7 @@ input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18p
 .row b{color:#b4491f}
 .row span{color:#7a6757;font-family:Arial,sans-serif}
 #all{max-height:400px;overflow-y:auto}
+#everyday-all .row{cursor:default}
 .note{font-family:Arial,sans-serif;font-size:13px;color:#7a6757}
 .ack{border-left:5px solid #b4491f}
 </style>
@@ -102,7 +103,14 @@ input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18p
 </section>
 
 <section class="category-panel" data-category-panel="greetings" hidden>
-<div class="card"><div class="lbl">Every day language</div><p class="note">Greeting words and phrases will be added here.</p></div>
+<div class="card">
+<label class="lbl" for="everyday-q">Search Noongar or English</label>
+<input id="everyday-q" type="search" placeholder="e.g. kaya or yes">
+</div>
+<div class="card">
+<div class="lbl" id="everyday-count"></div>
+<div id="everyday-all"></div>
+</div>
 </section>
 
 <section class="category-panel" data-category-panel="body-parts" hidden>
@@ -158,6 +166,21 @@ var DATA = [
 {en:"wattle bird",nm:["dongkarak"]},{en:"wild cat",nm:["djooditj"]},{en:"will wag tail",nm:["djidi-djidi"]}
 ];
 
+var EVERYDAY_DATA = [
+  {noongar:"kaya",english:"yes"},
+  {noongar:"noongka",english:"no"},
+  {noongar:"niny",english:"here / attention"},
+  {noongar:"niny barang",english:"get this"},
+  {noongar:"nidja",english:"here / this one / what"},
+  {noongar:"nyoornditj",english:"sorry"},
+  {noongar:"wangkiny",english:"talking / speaking"},
+  {noongar:"kooba wangkiny",english:"speaking well"},
+  {noongar:"nginang",english:"who"},
+  {noongar:"ngal",english:"what"},
+  {noongar:"nginap",english:"whose"},
+  {noongar:"nindjan",english:"attention / listen"}
+];
+
 function get(id){ return document.getElementById(id); }
 
 function clean(s){
@@ -211,6 +234,36 @@ function makeRow(entry){
     window.scrollTo(0, 0);
   };
   return row;
+}
+
+function renderEverydayWords(){
+  var query = clean(get("everyday-q").value);
+  var all = get("everyday-all");
+  var count = 0;
+  all.innerHTML = "";
+
+  for (var i = 0; i < EVERYDAY_DATA.length; i++) {
+    var entry = EVERYDAY_DATA[i];
+    if (query && clean(entry.noongar).indexOf(query) === -1 && clean(entry.english).indexOf(query) === -1) continue;
+    var row = document.createElement("div");
+    row.className = "row";
+    var noongar = document.createElement("b");
+    noongar.textContent = entry.noongar;
+    var english = document.createElement("span");
+    english.textContent = entry.english;
+    row.appendChild(noongar);
+    row.appendChild(english);
+    all.appendChild(row);
+    count++;
+  }
+
+  get("everyday-count").textContent = query ? count + " matching words" : "All " + count + " words";
+  if (count === 0) {
+    var empty = document.createElement("p");
+    empty.className = "note";
+    empty.textContent = "No matching words found.";
+    all.appendChild(empty);
+  }
 }
 
 function makeChip(big, small, missing){
@@ -285,6 +338,8 @@ function start(){
       showCategory(this.getAttribute("data-category"));
     };
   }
+  get("everyday-q").oninput = renderEverydayWords;
+  renderEverydayWords();
   get("q").oninput = translate;
   get("q").onkeyup = translate;
   var sorted = DATA.slice().sort(function(a, b){ return a.en < b.en ? -1 : 1; });
