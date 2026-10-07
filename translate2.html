@@ -85,18 +85,18 @@ input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18p
 
 <main>
 <nav class="category-nav" aria-label="Word categories">
-<button class="category-button" type="button" data-category="animals" aria-pressed="true">Animals</button>
+<button class="category-button" type="button" data-category="animals-plants" aria-pressed="true">Animals and plants</button>
 <button class="category-button" type="button" data-category="body-parts" aria-pressed="false">Body parts</button>
 <button class="category-button" type="button" data-category="weather" aria-pressed="false">Weather and environment</button>
 <button class="category-button" type="button" data-category="greetings" aria-pressed="false">Feelings and Greetings</button>
 <button class="category-button" type="button" data-category="family" aria-pressed="false">Family</button>
-<button class="category-button" type="button" data-category="plants" aria-pressed="false">Plants</button>
+<button class="category-button" type="button" data-category="food" aria-pressed="false">Food</button>
 </nav>
 
-<section class="category-panel" data-category-panel="animals">
+<section class="category-panel" data-category-panel="animals-plants">
 <div class="card">
 <div class="lbl">English word or phrase</div>
-<input id="q" type="text" placeholder="e.g. kangaroo, black snake, emu">
+<input id="q" type="text" placeholder="e.g. kangaroo, emu, jarrah tree">
 <div class="lbl" style="margin-top:14px">Noongar</div>
 <div id="out" class="note">Translations will appear here.</div>
 </div>
@@ -121,14 +121,14 @@ input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18p
 </div>
 </section>
 
-<section class="category-panel" data-category-panel="plants" hidden>
+<section class="category-panel" data-category-panel="food" hidden>
 <div class="card">
-<label class="lbl" for="plants-q">Search Noongar or English</label>
-<input id="plants-q" type="search" placeholder="e.g. grass, jarrah tree, dandelion grass">
+<label class="lbl" for="food-q">Search Noongar or English</label>
+<input id="food-q" type="search" placeholder="e.g. damper, berry, honey">
 </div>
 <div class="card">
-<div class="lbl" id="plants-count"></div>
-<div id="plants-all"></div>
+<div class="lbl" id="food-count"></div>
+<div id="food-all"></div>
 </div>
 </section>
 
@@ -258,14 +258,6 @@ var FAMILY_DATA = [
 ];
 
 var PLANTS_DATA = [
-  {noongar:"djilyaa",english:"honey and water drink"},
-  {noongar:"djol / djok / djoobak",english:"wild potato"},
-  {noongar:"met",english:"damper / food"},
-  {noongar:"mert",english:"damper / food"},
-  {noongar:"ngoonoong",english:"sweet, as in sugar/honey"},
-  {noongar:"ngoolyirt",english:"leaves of wild carrot"},
-  {noongar:"nirmam",english:"green berry / green berry with silver leaf"},
-  {noongar:"nodjam",english:"hard wild berry"},
   {noongar:"djir al",english:"grass around the base of a jarrah tree"},
   {noongar:"dj irap",english:"dandelion grass"},
   {noongar:"djirp",english:"dandelion grass"},
@@ -349,17 +341,19 @@ var BODY_PARTS_DATA = [
 ];
 
 var FOOD_DATA = [
-  {noongar:"djok / djol / djoobak",english:"wild potato"},
   {noongar:"djilyaa",english:"honey and water drink"},
-  {noongar:"wongoop",english:"native peach tree"},
+  {noongar:"djol / djok / djoobak",english:"wild potato"},
+  {noongar:"met",english:"damper / food"},
+  {noongar:"mert",english:"damper / food"},
+  {noongar:"ngoonoong",english:"sweet, as in sugar/honey"},
   {noongar:"ngoolyirt",english:"leaves of wild carrot"},
   {noongar:"nirmam",english:"green berry with silver leaf"},
-  {noongar:"nodjam",english:"hard wild berry"},
-  {noongar:"koorin",english:"medicine bush"},
-  {noongar:"djir al",english:"grass around the base of a jarrah tree"},
-  {noongar:"dj irap",english:"dandelion grass"},
-  {noongar:"djirp",english:"dandelion grass"}
+  {noongar:"nodjam",english:"hard wild berry"}
 ];
+
+DATA = DATA.concat(PLANTS_DATA.map(function(entry){
+  return {en:entry.english,nm:[entry.noongar]};
+}));
 
 function get(id){ return document.getElementById(id); }
 
@@ -523,8 +517,8 @@ function start(){
   }
   get("weather-q").oninput = function(){ renderWordList(ENVIRONMENT_DATA, "weather-q", "weather-all", "weather-count"); };
   renderWordList(ENVIRONMENT_DATA, "weather-q", "weather-all", "weather-count");
-  get("plants-q").oninput = function(){ renderWordList(PLANTS_DATA, "plants-q", "plants-all", "plants-count"); };
-  renderWordList(PLANTS_DATA, "plants-q", "plants-all", "plants-count");
+  get("food-q").oninput = function(){ renderWordList(FOOD_DATA, "food-q", "food-all", "food-count"); };
+  renderWordList(FOOD_DATA, "food-q", "food-all", "food-count");
   get("everyday-q").oninput = function(){ renderWordList(EVERYDAY_DATA, "everyday-q", "everyday-all", "everyday-count"); };
   renderWordList(EVERYDAY_DATA, "everyday-q", "everyday-all", "everyday-count");
   get("family-q").oninput = function(){ renderWordList(FAMILY_DATA, "family-q", "family-all", "family-count"); };
