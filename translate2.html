@@ -37,7 +37,7 @@ header .hello b{font-style:normal;color:#ffe3a3}
 /* ---- Page ---- */
 main{max-width:720px;margin:0 auto;padding:16px}
 .card{background:#fff;border:1px solid #e6d9c6;border-radius:12px;padding:16px;margin-bottom:16px}
-.category-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 16px}
+.category-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 16px}
 .category-button{min-height:44px;padding:8px 6px;border:1px solid #e6d9c6;border-radius:8px;background:#fff;color:#7a6757;
   font-family:Arial,sans-serif;font-size:14px;font-weight:bold;cursor:pointer}
 .category-button[aria-pressed="true"]{background:#a63d16;border-color:#a63d16;color:#fff}
@@ -88,8 +88,8 @@ input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18p
 <button class="category-button" type="button" data-category="animals" aria-pressed="true">Animals</button>
 <button class="category-button" type="button" data-category="environment" aria-pressed="false">Environment</button>
 <button class="category-button" type="button" data-category="greetings" aria-pressed="false">Every day language</button>
-<button class="category-button" type="button" data-category="family" aria-pressed="false">Family</button>
 <button class="category-button" type="button" data-category="body-parts" aria-pressed="false">Body parts</button>
+<button class="category-button" type="button" data-category="family" aria-pressed="false">Family</button>
 </nav>
 
 <section class="category-panel" data-category-panel="animals">
@@ -274,7 +274,23 @@ var ENVIRONMENT_DATA = [
   {noongar:"dooly",english:"misty rain"},
   {noongar:"mar",english:"wind / cloud"},
   {noongar:"bila",english:"river/water-related term"},
-  {noongar:"koolyir",english:"mist"}
+  {noongar:"koolyir",english:"mist"},
+  {noongar:"djart",english:"rain"},
+  {noongar:"djindoon",english:"stars"},
+  {noongar:"maant / miyak / iniki",english:"moon"},
+  {noongar:"mikang",english:"moonlight"},
+  {noongar:"ngangk",english:"sun / mother"},
+  {noongar:"ngangk barloonginy",english:"sunrise"},
+  {noongar:"ngangk ngarda",english:"sundown"},
+  {noongar:"ngangk wirdiny",english:"sunsetting"},
+  {noongar:"ngangk yira",english:"rising sun"},
+  {noongar:"mardidjit",english:"thunder"},
+  {noongar:"wirl-wiri",english:"whirlwind / wind spray"},
+  {noongar:"wirdiny",english:"good"},
+  {noongar:"winy?",english:"winter"},
+  {noongar:"djidar",english:"daylight / dawn of morning"},
+  {noongar:"djadoolook",english:"night"},
+  {noongar:"kedalak",english:"night time"}
 ];
 
 var BODY_PARTS_DATA = [
