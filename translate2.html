@@ -191,6 +191,7 @@ var DATA = [
 {en:"dingo",nm:["mokiny"]},{en:"dog",nm:["dwert"]},{en:"ducks",nm:["yerderap"]},{en:"eagle",nm:["waalitj"]},
 {en:"hawk",nm:["yelka"]},{en:"echidna",nm:["nyingarn"]},{en:"emu",nm:["waitj","wetj"]},
 {en:"female possum",nm:["koomal"]},{en:"fish",nm:["djildjit"]},{en:"flathead",nm:["nolka"]},
+{en:"wading bird",nm:["dilabert"]},
 {en:"flies",nm:["nort"]},{en:"fly",nm:["minga","noort","noordoo"]},
 {en:"frog",nm:["koorni","kooyar","kwdijar kwiyar","kwooyar"]},{en:"garfish",nm:["yelin"]},
 {en:"gecko",nm:["bibdjool"]},{en:"black goanna",nm:["yongki","yoondarn"]},{en:"grasshopper",nm:["djidily"]},
@@ -198,17 +199,17 @@ var DATA = [
 {en:"kangaroo",nm:["yongka"]},{en:"kookaburra",nm:["kaa-kaa"]},{en:"lice",nm:["kool"]},
 {en:"lizard",nm:["yorndi"]},{en:"blue-tongue lizard",nm:["dilert"]},{en:"frilled dragon lizard",nm:["kalari"]},
 {en:"maggots",nm:["boodjark"]},{en:"magpie",nm:["koolbardi"]},{en:"mallee fowl",nm:["ngawoo"]},
-{en:"marron",nm:["koonak","djilki"]},{en:"mountain duck",nm:["nyimarak"]},
+{en:"marron",nm:["koonak","djilki"]},{en:"mullet fish",nm:["kalkada"]},{en:"mountain duck",nm:["nyimarak"]},
 {en:"mud-lark",nm:["diliboort","koolyabarak"]},{en:"night hawk",nm:["nyoorlam"]},{en:"night owl",nm:["yaartj"]},
-{en:"nightbird",nm:["nyoolang"]},{en:"barn owl",nm:["yoowintj"]},{en:"brown owl",nm:["wiroo","wiroop"]},
-{en:"tawny frogmouth",nm:["djoowi"]},{en:"parakeet",nm:["kawart"]},{en:"pigs",nm:["dordok"]},
+{en:"nightbird",nm:["nyoolang"]},{en:"barn owl",nm:["yoowintj"]},{en:"brown owl",nm:["wiroo","wiroop"]},{en:"owl",nm:["kambany"]},
+{en:"tawny frogmouth",nm:["djoowi"]},{en:"parakeet",nm:["kawart"]},{en:"parrot",nm:["kaawar"]},{en:"pigs",nm:["dordok"]},
 {en:"poisonous snake",nm:["ngibart"]},{en:"porpoise",nm:["kwilena"]},{en:"possum",nm:["ngwir"]},
 {en:"ring tailed possum",nm:["ngwayir"]},{en:"prawns",nm:["yala"]},{en:"puppy",nm:["dwert kooniny"]},
-{en:"purple-crowned lorikeet",nm:["kawoor"]},{en:"bilby",nm:["djalkat"]},{en:"goanna",nm:["kardar"]},
+{en:"purple-crowned lorikeet",nm:["kawoor"]},{en:"bilby",nm:["djalkat"]},{en:"rabbit bandicoot",nm:["djalkat"]},{en:"goanna",nm:["kardar"]},
 {en:"rat",nm:["bankot"]},{en:"red kangaroo",nm:["marloo"]},{en:"rock wallaby",nm:["moorang"]},
 {en:"scorpion",nm:["nindjaliny"]},{en:"shark",nm:["kwila"]},{en:"sheep",nm:["kookendjeri"]},
 {en:"skink",nm:["yoolart"]},{en:"brown snake",nm:["dookatj"]},{en:"snapper",nm:["yolka"]},
-{en:"spiders",nm:["kar"]},{en:"spotted goanna",nm:["djorlkoorl"]},{en:"swan",nm:["maali"]},
+{en:"spider",nm:["kar"]},{en:"spiders",nm:["kar"]},{en:"spotted goanna",nm:["djorlkoorl","djorkoorl"]},{en:"swan",nm:["maali"]},
 {en:"tiger snake",nm:["nornt"]},{en:"long necked tortoise",nm:["booyi"]},{en:"wallaby",nm:["kwoka"]},
 {en:"brush tailed wallaby",nm:["kwer","kwoora"]},{en:"water snake",nm:["maadjit","madjit"]},
 {en:"wattle bird",nm:["dongkarak"]},{en:"wild cat",nm:["djooditj"]},{en:"will wag tail",nm:["djidi-djidi"]}
@@ -231,6 +232,7 @@ var EVERYDAY_DATA = [
   {noongar:"djoorabiny",english:"romantically keen on a person"},
   {noongar:"nyoornditj",english:"sorry"},
   {noongar:"wiyany",english:"aim to miss"},
+  {noongar:"kaat wara",english:"mad greetings"},
   {noongar:"wirdiny",english:"good"},
   {noongar:"djindjin",english:"good spirit"},
   {noongar:"wangkiny",english:"talking / speaking"},
@@ -269,10 +271,14 @@ var PLANTS_DATA = [
   {noongar:"koorin",english:"medicine bush"},
   {noongar:"mardong?",english:"red gum tree"},
   {noongar:"ngarl",english:"sap from red gum tree"},
-  {noongar:"boodjari",english:"plant/food-related entry"}
+  {noongar:"boodjari",english:"plant/food-related entry"},
+  {noongar:"bonoo",english:"stick"},
+  {noongar:"djaawit",english:"york gum"},
+  {noongar:"kalbiri",english:"wild berries"},
 ];
 
 var ENVIRONMENT_DATA = [
+  {noongar:"boodjera",english:"earth, ground, sand plain"},
   {noongar:"baat",english:"water rushes"},
   {noongar:"bada mandoo",english:"sunbeams"},
   {noongar:"balyoongar",english:"sand soil"},
@@ -292,8 +298,10 @@ var ENVIRONMENT_DATA = [
   {noongar:"mar",english:"wind / cloud"},
   {noongar:"bila",english:"river/water-related term"},
   {noongar:"koolyir",english:"mist"},
-  {noongar:"djart",english:"rain"},
+  {noongar:"djart",english:"rain / sun"},
   {noongar:"djindoon",english:"stars"},
+  {noongar:"dirdong",english:"spring time"},
+  {noongar:"diyirn",english:"star"},
   {noongar:"maant / miyak / iniki",english:"moon"},
   {noongar:"mikang",english:"moonlight"},
   {noongar:"ngangk",english:"sun / mother"},
@@ -346,7 +354,11 @@ var BODY_PARTS_DATA = [
   {noongar:"maawit",english:"leg / shin bone"},
   {noongar:"maara",english:"hand"},
   {noongar:"ngarnak kwetj",english:"scrawny neck"},
-  {noongar:"wark?",english:"lungs"}
+  {noongar:"wark?",english:"lungs"},
+  {noongar:"djint",english:"eyebrows"},
+  {noongar:"kaat djooloor",english:"skull (head bone)"},
+  {noongar:"kaboorl",english:"stomach, guts"},
+  {noongar:"kalyat",english:"cheeks"},
 ];
 
 var FOOD_DATA = [
@@ -357,7 +369,10 @@ var FOOD_DATA = [
   {noongar:"ngoonoong",english:"sweet, as in sugar/honey"},
   {noongar:"ngoolyirt",english:"leaves of wild carrot"},
   {noongar:"nirmam",english:"green berry with silver leaf"},
-  {noongar:"nodjam",english:"hard wild berry"}
+  {noongar:"nodjam",english:"hard wild berry"},
+  {noongar:"djiyak",english:"food"},
+  {noongar:"kaba nganiny",english:"drinking wine"},
+  {noongar:"keba",english:"beer, wine"},
 ];
 
 DATA = DATA.concat(PLANTS_DATA.map(function(entry){
