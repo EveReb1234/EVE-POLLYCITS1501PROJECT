@@ -6,13 +6,16 @@
     <title>Noongar Language Explorer</title>
     <style>
       :root {
-        --ink: #30291f;
-        --muted: #67502a;
+        --ink: #2d1f1b;
+        --muted: #5e4639;
         --red: #a83225;
-        --gold: #e2bd24;
-        --cream: #fff7d8;
-        --paper: #f9f5ee;
-        --line: #e7dcc6;
+        --gold: #d9a62d;
+        --cream: #fff4d6;
+        --paper: #f7ead7;
+        --sand: #f0d7a5;
+        --rust: #c75a2a;
+        --line: #e7c89a;
+        --card: #fffaf2;
       }
 
       * { box-sizing: border-box; }
@@ -20,7 +23,7 @@
       body {
         margin: 0;
         font-family: Arial, sans-serif;
-        background: var(--paper);
+        background: linear-gradient(180deg, #f8efd9 0%, #f5e0b5 35%, #f8f1e1 100%);
         color: var(--ink);
       }
 
@@ -32,9 +35,9 @@
       }
 
       .hero {
-        background: var(--cream);
+        background: linear-gradient(135deg, #fff2c7 0%, #f6d694 32%, #efd19d 100%);
         border-top: 6px solid var(--gold);
-        border-bottom: 3px solid var(--red);
+        border-bottom: 4px solid var(--red);
         border-radius: 0;
         padding: 30px 24px 24px;
         text-align: center;
@@ -84,11 +87,11 @@
       }
 
       .card {
-        background: white;
+        background: var(--card);
         border: 1px solid var(--line);
-        border-radius: 12px;
+        border-radius: 14px;
         padding: 22px;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+        box-shadow: 0 6px 18px rgba(112, 72, 28, 0.08);
       }
 
       .card h2 {
@@ -105,15 +108,16 @@
         display: inline-block;
         width: 100%;
         text-align: center;
-        background: var(--red);
+        background: linear-gradient(135deg, var(--red) 0%, var(--rust) 100%);
         color: white;
         text-decoration: none;
         border: none;
-        border-radius: 8px;
+        border-radius: 10px;
         padding: 12px 16px;
         font-size: 1rem;
         cursor: pointer;
         margin-top: 10px;
+        box-shadow: 0 4px 10px rgba(168, 50, 37, 0.2);
       }
 
       .btn:hover {
@@ -123,9 +127,9 @@
 
       .flag-wrap {
         margin-top: 24px;
-        background: white;
+        background: linear-gradient(180deg, #fffaf1 0%, #f5e7c8 100%);
         border: 1px solid var(--line);
-        border-radius: 12px;
+        border-radius: 14px;
         padding: 20px;
         margin-left: 20px;
         margin-right: 20px;
@@ -146,9 +150,9 @@
 
       .translator-section {
         margin-top: 36px;
-        background: white;
+        background: linear-gradient(180deg, #fff9ef 0%, #f5e6c2 100%);
         border: 1px solid var(--line);
-        border-radius: 12px;
+        border-radius: 14px;
         padding: 22px;
       }
 
