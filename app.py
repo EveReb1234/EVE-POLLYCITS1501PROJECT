@@ -154,10 +154,9 @@ if st.session_state["page"] == "Home":
     with translation_column:
         st.subheader("Translation")
         st.write("Look up a term using the published dataset.")
-        st.button(
+        st.link_button(
             "Open Translation",
-            on_click=navigate_to,
-            args=("Translation",),
+            "http://localhost:8000/translate2.html",
             type="primary",
             use_container_width=True,
         )
