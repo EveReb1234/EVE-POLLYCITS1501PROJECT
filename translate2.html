@@ -260,6 +260,23 @@ var PLANTS_DATA = [
   {noongar:"djilyaa",english:"honey and water drink"}
 ];
 
+var ENVIRONMENT_DATA = [
+  {noongar:"bilya",english:"river"},
+  {noongar:"boya",english:"stone / rock"},
+  {noongar:"boya warbiny",english:"gamble for money"},
+  {noongar:"mardaa",english:"sea water"},
+  {noongar:"maya",english:"place / home"},
+  {noongar:"ngala maya",english:"our place"},
+  {noongar:"ngam ar",english:"water standing in a rock hole"},
+  {noongar:"boola",english:"many / plenty"},
+  {noongar:"kwelak",english:"hill"},
+  {noongar:"kwelak, kwilk",english:"hills"},
+  {noongar:"dooly",english:"misty rain"},
+  {noongar:"mar",english:"wind / cloud"},
+  {noongar:"bila",english:"river/water-related term"},
+  {noongar:"koolyir",english:"mist"}
+];
+
 var BODY_PARTS_DATA = [
   {noongar:"maar",english:"hand"},
   {noongar:"maaraka",english:"hands"},
@@ -457,8 +474,8 @@ function start(){
       showCategory(this.getAttribute("data-category"));
     };
   }
-  get("plants-q").oninput = function(){ renderWordList(PLANTS_DATA, "plants-q", "plants-all", "plants-count"); };
-  renderWordList(PLANTS_DATA, "plants-q", "plants-all", "plants-count");
+  get("plants-q").oninput = function(){ renderWordList(ENVIRONMENT_DATA, "plants-q", "plants-all", "plants-count"); };
+  renderWordList(ENVIRONMENT_DATA, "plants-q", "plants-all", "plants-count");
   get("everyday-q").oninput = function(){ renderWordList(EVERYDAY_DATA, "everyday-q", "everyday-all", "everyday-count"); };
   renderWordList(EVERYDAY_DATA, "everyday-q", "everyday-all", "everyday-count");
   get("family-q").oninput = function(){ renderWordList(FAMILY_DATA, "family-q", "family-all", "family-count"); };
