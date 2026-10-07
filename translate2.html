@@ -109,7 +109,14 @@ input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18p
 </section>
 
 <section class="category-panel" data-category-panel="plants" hidden>
-<div class="card"><div class="lbl">Plants</div><p class="note">Plant words will be added here.</p></div>
+<div class="card">
+<label class="lbl" for="plants-q">Search Noongar or English</label>
+<input id="plants-q" type="search" placeholder="e.g. djirp or grass">
+</div>
+<div class="card">
+<div class="lbl" id="plants-count"></div>
+<div id="plants-all"></div>
+</div>
 </section>
 
 <section class="category-panel" data-category-panel="greetings" hidden>
@@ -196,6 +203,23 @@ var EVERYDAY_DATA = [
   {noongar:"ngal",english:"what"},
   {noongar:"nginap",english:"whose"},
   {noongar:"nindjan",english:"attention / listen"}
+];
+
+var PLANTS_DATA = [
+  {noongar:"djir al",english:"grass around the base of a jarrah tree"},
+  {noongar:"dj irap",english:"dandelion grass"},
+  {noongar:"djirp",english:"dandelion grass"},
+  {noongar:"djok / djol / djoobak",english:"wild potato"},
+  {noongar:"wongoop",english:"native peach tree"},
+  {noongar:"koorin",english:"medicine bush"},
+  {noongar:"mardong?",english:"red gum tree"},
+  {noongar:"ngarl",english:"sap from red gum tree"},
+  {noongar:"ngoolyirt",english:"leaves of wild carrot"},
+  {noongar:"nirmam",english:"green berry with silver leaf"},
+  {noongar:"nodjam",english:"hard wild berry"},
+  {noongar:"nobarat",english:"children"},
+  {noongar:"boodjari",english:"plant/food-related entry"},
+  {noongar:"djilyaa",english:"honey and water drink"}
 ];
 
 var BODY_PARTS_DATA = [
@@ -395,6 +419,8 @@ function start(){
       showCategory(this.getAttribute("data-category"));
     };
   }
+  get("plants-q").oninput = function(){ renderWordList(PLANTS_DATA, "plants-q", "plants-all", "plants-count"); };
+  renderWordList(PLANTS_DATA, "plants-q", "plants-all", "plants-count");
   get("everyday-q").oninput = function(){ renderWordList(EVERYDAY_DATA, "everyday-q", "everyday-all", "everyday-count"); };
   renderWordList(EVERYDAY_DATA, "everyday-q", "everyday-all", "everyday-count");
   get("body-parts-q").oninput = function(){ renderWordList(BODY_PARTS_DATA, "body-parts-q", "body-parts-all", "body-parts-count"); };
