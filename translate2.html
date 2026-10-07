@@ -7,6 +7,10 @@
 <style>
 body{margin:0;background:#faf5ec;color:#2b1d14;font-family:Georgia,serif;font-size:16px;line-height:1.5}
 a{color:#b4491f}
+.site-nav{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;padding:10px 16px;background:#fffaf2;border-bottom:1px solid #e6d9c6;font-family:Arial,sans-serif}
+.site-nav a{padding:8px 12px;border-radius:8px;color:#7a6757;font-size:14px;font-weight:bold;text-decoration:none}
+.site-nav a[aria-current="page"]{background:#a63d16;color:#fff}
+.site-nav a:focus-visible{outline:3px solid #2b1d14;outline-offset:2px}
 
 /* ---- Title area ---- */
 header{position:relative;text-align:center;color:#fff;padding:44px 16px 0;
@@ -56,6 +60,12 @@ input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18p
 </style>
 </head>
 <body>
+
+<nav class="site-nav" aria-label="Main navigation">
+<a href="homescreen.html">Home</a>
+<a href="translate2.html" aria-current="page">Translation</a>
+<a href="Stats.html">Languages spoken</a>
+</nav>
 
 <header>
   <p class="place">Noongar Boodjar</p>

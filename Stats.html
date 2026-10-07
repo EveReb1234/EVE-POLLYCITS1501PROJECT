@@ -29,9 +29,17 @@ select{font:inherit;padding:.45rem .6rem;border:1px solid var(--line);border-rad
 ul{padding-left:1.2rem;max-width:68ch}li{margin:.35rem 0}
 .note{font-size:.85rem;color:var(--mute)}
 :focus-visible{outline:3px solid var(--sea);outline-offset:2px}
+.site-nav{display:flex;flex-wrap:wrap;gap:.5rem;max-width:880px;margin:0 auto;padding:.75rem 1.25rem}
+.site-nav a{padding:.45rem .6rem;border-radius:6px;color:var(--sea);font-weight:600;text-decoration:none}
+.site-nav a[aria-current="page"]{background:var(--card)}
 </style>
 </head>
 <body>
+<nav class="site-nav" aria-label="Main navigation">
+<a href="homescreen.html">Home</a>
+<a href="translate2.html">Translation</a>
+<a href="Stats.html" aria-current="page">Languages spoken</a>
+</nav>
 <header>
 <h1>Languages spoken at home in the Noongar region of Western Australia</h1>
 <p class="lede">How many Aboriginal and Torres Strait Islander people speak English, an Aboriginal language, or another language at home, in the Noongar region of WA.</p>

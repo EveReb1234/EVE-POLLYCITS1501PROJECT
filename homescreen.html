@@ -27,6 +27,28 @@
         color: var(--ink);
       }
 
+      .site-nav {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 10px 16px;
+        background: var(--card);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .site-nav a {
+        padding: 8px 12px;
+        border-radius: 6px;
+        color: var(--red);
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-decoration: none;
+      }
+
+      .site-nav a[aria-current="page"] { background: var(--cream); }
+      .site-nav a:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+
       .page {
         width: 100%;
         max-width: 1400px;
@@ -253,6 +275,11 @@
     </style>
   </head>
   <body>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="homescreen.html" aria-current="page">Home</a>
+      <a href="translate2.html">Translation</a>
+      <a href="Stats.html">Languages spoken</a>
+    </nav>
     <div class="page">
       <div class="hero">
         <svg class="wave" viewBox="0 0 1000 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
