@@ -33,6 +33,13 @@ header .hello b{font-style:normal;color:#ffe3a3}
 /* ---- Page ---- */
 main{max-width:720px;margin:0 auto;padding:16px}
 .card{background:#fff;border:1px solid #e6d9c6;border-radius:12px;padding:16px;margin-bottom:16px}
+.category-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 16px}
+.category-button{min-height:44px;padding:8px 6px;border:1px solid #e6d9c6;border-radius:8px;background:#fff;color:#7a6757;
+  font-family:Arial,sans-serif;font-size:14px;font-weight:bold;cursor:pointer}
+.category-button[aria-pressed="true"]{background:#a63d16;border-color:#a63d16;color:#fff}
+.category-button:focus-visible{outline:3px solid #2b1d14;outline-offset:2px}
+.category-panel[hidden]{display:none}
+@media (max-width:520px){.category-nav{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .lbl{font-family:Arial,sans-serif;font-size:12px;font-weight:bold;text-transform:uppercase;color:#7a6757}
 input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18px;border:1px solid #e6d9c6;border-radius:8px}
 #out{margin-top:6px;font-size:22px;min-height:40px}
@@ -52,7 +59,7 @@ input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18p
 <header>
   <p class="place">Noongar Boodjar</p>
   <h1>English to Noongar</h1>
-  <p class="hello"><b>Kaya!</b> Look up animal words in the Noongar language</p>
+  <p class="hello"><b>Kaya!</b> Explore Noongar words by category</p>
   <div class="sun"></div>
   <svg class="hills" viewBox="0 0 1200 90" preserveAspectRatio="none" aria-hidden="true">
     <path d="M0,60 C150,20 300,70 470,45 C640,18 760,70 920,50 C1050,32 1130,48 1200,40 L1200,90 L0,90 Z" fill="#8a3a16" opacity=".55"/>
@@ -66,6 +73,14 @@ input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18p
 </div>
 
 <main>
+<nav class="category-nav" aria-label="Word categories">
+<button class="category-button" type="button" data-category="animals" aria-pressed="true">Animals</button>
+<button class="category-button" type="button" data-category="plants" aria-pressed="false">Plants</button>
+<button class="category-button" type="button" data-category="greetings" aria-pressed="false">Greetings</button>
+<button class="category-button" type="button" data-category="body-parts" aria-pressed="false">Body parts</button>
+</nav>
+
+<section class="category-panel" data-category-panel="animals">
 <div class="card">
 <div class="lbl">English word or phrase</div>
 <input id="q" type="text" placeholder="e.g. kangaroo, black snake, emu">
@@ -80,6 +95,19 @@ input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18p
 <div class="lbl" id="count"></div>
 <div id="all"></div>
 </div>
+</section>
+
+<section class="category-panel" data-category-panel="plants" hidden>
+<div class="card"><div class="lbl">Plants</div><p class="note">Plant words will be added here.</p></div>
+</section>
+
+<section class="category-panel" data-category-panel="greetings" hidden>
+<div class="card"><div class="lbl">Greetings</div><p class="note">Greeting words and phrases will be added here.</p></div>
+</section>
+
+<section class="category-panel" data-category-panel="body-parts" hidden>
+<div class="card"><div class="lbl">Body parts</div><p class="note">Body part words will be added here.</p></div>
+</section>
 
 <div class="card ack">
 <div class="lbl">Acknowledgement</div>
@@ -237,8 +265,26 @@ function translate(){
   box.style.display = count ? "block" : "none";
 }
 
+function showCategory(category){
+  var buttons = document.querySelectorAll(".category-button");
+  var panels = document.querySelectorAll(".category-panel");
+  for (var buttonIndex = 0; buttonIndex < buttons.length; buttonIndex++) {
+    buttons[buttonIndex].setAttribute("aria-pressed",
+      buttons[buttonIndex].getAttribute("data-category") === category ? "true" : "false");
+  }
+  for (var panelIndex = 0; panelIndex < panels.length; panelIndex++) {
+    panels[panelIndex].hidden = panels[panelIndex].getAttribute("data-category-panel") !== category;
+  }
+}
+
 function start(){
   buildSeasons();
+  var categoryButtons = document.querySelectorAll(".category-button");
+  for (var categoryIndex = 0; categoryIndex < categoryButtons.length; categoryIndex++) {
+    categoryButtons[categoryIndex].onclick = function(){
+      showCategory(this.getAttribute("data-category"));
+    };
+  }
   get("q").oninput = translate;
   get("q").onkeyup = translate;
   var sorted = DATA.slice().sort(function(a, b){ return a.en < b.en ? -1 : 1; });
