@@ -114,7 +114,14 @@ input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18p
 </section>
 
 <section class="category-panel" data-category-panel="body-parts" hidden>
-<div class="card"><div class="lbl">Body parts</div><p class="note">Body part words will be added here.</p></div>
+<div class="card">
+<label class="lbl" for="body-parts-q">Search Noongar or English</label>
+<input id="body-parts-q" type="search" placeholder="e.g. maar or hand">
+</div>
+<div class="card">
+<div class="lbl" id="body-parts-count"></div>
+<div id="body-parts-all"></div>
+</div>
 </section>
 
 <div class="card ack">
@@ -181,6 +188,46 @@ var EVERYDAY_DATA = [
   {noongar:"nindjan",english:"attention / listen"}
 ];
 
+var BODY_PARTS_DATA = [
+  {noongar:"maar",english:"hand"},
+  {noongar:"maaraka",english:"hands"},
+  {noongar:"maaraka birika",english:"finger on hand"},
+  {noongar:"djen",english:"foot"},
+  {noongar:"djen koodjal",english:"two feet"},
+  {noongar:"djena",english:"feet"},
+  {noongar:"djoombar",english:"hair / body hair"},
+  {noongar:"djoorla",english:"bone"},
+  {noongar:"djoorp",english:"kidney"},
+  {noongar:"mardaa?",english:"skin"},
+  {noongar:"ngaaly",english:"armpit"},
+  {noongar:"ngarnak",english:"back of neck"},
+  {noongar:"ngariny",english:"rib bone"},
+  {noongar:"ngatj",english:"me"},
+  {noongar:"ngoont",english:"chest"},
+  {noongar:"ngorlak",english:"teeth / tooth"},
+  {noongar:"ngoonmoorn",english:"right hand"},
+  {noongar:"ngoorlak",english:"teeth / tooth"},
+  {noongar:"ngirdiny",english:"shoulder blade"},
+  {noongar:"ngarmgoongooditj",english:"hairy face"},
+  {noongar:"bily",english:"navel / umbilicus"},
+  {noongar:"babitj",english:"finger / fingernails / toenails"},
+  {noongar:"dja",english:"mouth / tongue / lips"},
+  {noongar:"mimi",english:"nipple / breast milk"},
+  {noongar:"mooly / moly",english:"nose"},
+  {noongar:"mardjen-mardjen",english:"nose bone"},
+  {noongar:"koonyung",english:"palate of mouth"},
+  {noongar:"dil",english:"vagina"},
+  {noongar:"djaat",english:"ankle"},
+  {noongar:"weliak",english:"hip bone / pelvis"},
+  {noongar:"nirmt",english:"tail bone"},
+  {noongar:"noyt",english:"stomach"},
+  {noongar:"mendilj",english:"lips"},
+  {noongar:"maawit",english:"leg / shin bone"},
+  {noongar:"maara",english:"hand"},
+  {noongar:"ngarnak kwetj",english:"scrawny neck"},
+  {noongar:"wark?",english:"lungs"}
+];
+
 function get(id){ return document.getElementById(id); }
 
 function clean(s){
@@ -236,14 +283,14 @@ function makeRow(entry){
   return row;
 }
 
-function renderEverydayWords(){
-  var query = clean(get("everyday-q").value);
-  var all = get("everyday-all");
+function renderWordList(entries, queryId, allId, countId){
+  var query = clean(get(queryId).value);
+  var all = get(allId);
   var count = 0;
   all.innerHTML = "";
 
-  for (var i = 0; i < EVERYDAY_DATA.length; i++) {
-    var entry = EVERYDAY_DATA[i];
+  for (var i = 0; i < entries.length; i++) {
+    var entry = entries[i];
     if (query && clean(entry.noongar).indexOf(query) === -1 && clean(entry.english).indexOf(query) === -1) continue;
     var row = document.createElement("div");
     row.className = "row";
@@ -257,7 +304,7 @@ function renderEverydayWords(){
     count++;
   }
 
-  get("everyday-count").textContent = query ? count + " matching words" : "All " + count + " words";
+  get(countId).textContent = query ? count + " matching words" : "All " + count + " words";
   if (count === 0) {
     var empty = document.createElement("p");
     empty.className = "note";
@@ -338,8 +385,10 @@ function start(){
       showCategory(this.getAttribute("data-category"));
     };
   }
-  get("everyday-q").oninput = renderEverydayWords;
-  renderEverydayWords();
+  get("everyday-q").oninput = function(){ renderWordList(EVERYDAY_DATA, "everyday-q", "everyday-all", "everyday-count"); };
+  renderWordList(EVERYDAY_DATA, "everyday-q", "everyday-all", "everyday-count");
+  get("body-parts-q").oninput = function(){ renderWordList(BODY_PARTS_DATA, "body-parts-q", "body-parts-all", "body-parts-count"); };
+  renderWordList(BODY_PARTS_DATA, "body-parts-q", "body-parts-all", "body-parts-count");
   get("q").oninput = translate;
   get("q").onkeyup = translate;
   var sorted = DATA.slice().sort(function(a, b){ return a.en < b.en ? -1 : 1; });
