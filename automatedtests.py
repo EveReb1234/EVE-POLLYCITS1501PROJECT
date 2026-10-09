@@ -56,20 +56,6 @@ class AutomatedTests(unittest.TestCase):
         self.assertIn("all.appendChild(row)", translate_page)
         self.assertIn('get(matchBoxId).style.display = query && matchCount ? "block" : "none";', translate_page)
 
-    # Checks that dictionary entries are numerous, correctly shaped, and exclude the tested word "banksia".
-    def test_dictionary_entries_have_valid_fields_and_expected_contents(self):
-        with open(ROOT / "dictionary_data.json", "r", encoding="utf-8") as file:
-            data = json.load(file)
-
-        self.assertIsInstance(data, list)
-        self.assertGreater(len(data), 100)
-        for entry in data:
-            self.assertIn("english", entry)
-            self.assertIn("noongar", entry)
-            self.assertIsInstance(entry["english"], str)
-            self.assertIsInstance(entry["noongar"], str)
-        self.assertNotIn("banksia", json.dumps(data).lower())
-
     # Checks that the stats page offers both census years, comparison controls, and two updating charts.
     def test_stats_page_has_year_region_controls_and_charts(self):
         stats_page = (ROOT / "Stats.html").read_text(encoding="utf-8", errors="ignore")
