@@ -115,6 +115,10 @@ input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18p
 <label class="lbl" for="weather-q">Search Noongar or English</label>
 <input id="weather-q" type="search" placeholder="e.g. river, rain, moon, wind">
 </div>
+<div class="card" id="weather-match-box" style="display:none">
+<div class="lbl" id="weather-match-count"></div>
+<div id="weather-matches"></div>
+</div>
 <div class="card">
 <div class="lbl" id="weather-count"></div>
 <div id="weather-all"></div>
@@ -125,6 +129,10 @@ input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18p
 <div class="card">
 <label class="lbl" for="food-q">Search Noongar or English</label>
 <input id="food-q" type="search" placeholder="e.g. damper, berry, honey">
+</div>
+<div class="card" id="food-match-box" style="display:none">
+<div class="lbl" id="food-match-count"></div>
+<div id="food-matches"></div>
 </div>
 <div class="card">
 <div class="lbl" id="food-count"></div>
@@ -137,6 +145,10 @@ input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18p
 <label class="lbl" for="everyday-q">Search Noongar or English</label>
 <input id="everyday-q" type="search" placeholder="e.g. hello, sorry, speaking well">
 </div>
+<div class="card" id="everyday-match-box" style="display:none">
+<div class="lbl" id="everyday-match-count"></div>
+<div id="everyday-matches"></div>
+</div>
 <div class="card">
 <div class="lbl" id="everyday-count"></div>
 <div id="everyday-all"></div>
@@ -148,6 +160,10 @@ input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18p
 <label class="lbl" for="family-q">Search Noongar or English</label>
 <input id="family-q" type="search" placeholder="e.g. mother, brother, children">
 </div>
+<div class="card" id="family-match-box" style="display:none">
+<div class="lbl" id="family-match-count"></div>
+<div id="family-matches"></div>
+</div>
 <div class="card">
 <div class="lbl" id="family-count"></div>
 <div id="family-all"></div>
@@ -158,6 +174,10 @@ input{width:100%;box-sizing:border-box;margin-top:6px;padding:12px;font-size:18p
 <div class="card">
 <label class="lbl" for="body-parts-q">Search Noongar or English</label>
 <input id="body-parts-q" type="search" placeholder="e.g. hand, nose, stomach">
+</div>
+<div class="card" id="body-parts-match-box" style="display:none">
+<div class="lbl" id="body-parts-match-count"></div>
+<div id="body-parts-matches"></div>
 </div>
 <div class="card">
 <div class="lbl" id="body-parts-count"></div>
@@ -443,23 +463,24 @@ function makeRow(entry){
   return row;
 }
 
-function renderWordList(entries, queryId, allId, countId){
+function renderWordList(entries, queryId, allId, countId, matchesId, matchCountId, matchBoxId){
   var query = clean(get(queryId).value);
   var all = get(allId);
-  var count = 0;
+  var matches = get(matchesId);
+  var matchCount = 0;
   var sortedEntries = entries.slice().sort(function(a, b){
     return a.english.localeCompare(b.english, undefined, {sensitivity:"base"});
   });
   all.innerHTML = "";
+  matches.innerHTML = "";
 
   for (var i = 0; i < sortedEntries.length; i++) {
     var entry = sortedEntries[i];
-    if (query && clean(entry.noongar).indexOf(query) === -1 && clean(entry.english).indexOf(query) === -1) continue;
-    if (query) {
+    var matchesQuery = query && clean(entry.noongar).indexOf(query) !== -1 || query && clean(entry.english).indexOf(query) !== -1;
+    if (matchesQuery) {
       var exactMatch = query === clean(entry.noongar) || query === clean(entry.english);
-      all.appendChild(makeChip(entry.noongar, entry.english, !exactMatch));
-      count++;
-      continue;
+      matches.appendChild(makeChip(entry.noongar, entry.english, !exactMatch));
+      matchCount++;
     }
     var row = document.createElement("div");
     row.className = "row";
@@ -470,16 +491,11 @@ function renderWordList(entries, queryId, allId, countId){
     row.appendChild(noongar);
     row.appendChild(english);
     all.appendChild(row);
-    count++;
   }
 
-  get(countId).textContent = query ? count + " matching words" : "All " + count + " words";
-  if (count === 0) {
-    var empty = document.createElement("p");
-    empty.className = "note";
-    empty.textContent = "No matching words found.";
-    all.appendChild(empty);
-  }
+  get(countId).textContent = "All " + sortedEntries.length + " words";
+  get(matchCountId).textContent = matchCount + " matching words";
+  get(matchBoxId).style.display = query && matchCount ? "block" : "none";
 }
 
 function makeChip(big, small, missing){
@@ -554,16 +570,16 @@ function start(){
       showCategory(this.getAttribute("data-category"));
     };
   }
-  get("weather-q").oninput = function(){ renderWordList(ENVIRONMENT_DATA, "weather-q", "weather-all", "weather-count"); };
-  renderWordList(ENVIRONMENT_DATA, "weather-q", "weather-all", "weather-count");
-  get("food-q").oninput = function(){ renderWordList(FOOD_DATA, "food-q", "food-all", "food-count"); };
-  renderWordList(FOOD_DATA, "food-q", "food-all", "food-count");
-  get("everyday-q").oninput = function(){ renderWordList(EVERYDAY_DATA, "everyday-q", "everyday-all", "everyday-count"); };
-  renderWordList(EVERYDAY_DATA, "everyday-q", "everyday-all", "everyday-count");
-  get("family-q").oninput = function(){ renderWordList(FAMILY_DATA, "family-q", "family-all", "family-count"); };
-  renderWordList(FAMILY_DATA, "family-q", "family-all", "family-count");
-  get("body-parts-q").oninput = function(){ renderWordList(BODY_PARTS_DATA, "body-parts-q", "body-parts-all", "body-parts-count"); };
-  renderWordList(BODY_PARTS_DATA, "body-parts-q", "body-parts-all", "body-parts-count");
+  get("weather-q").oninput = function(){ renderWordList(ENVIRONMENT_DATA, "weather-q", "weather-all", "weather-count", "weather-matches", "weather-match-count", "weather-match-box"); };
+  renderWordList(ENVIRONMENT_DATA, "weather-q", "weather-all", "weather-count", "weather-matches", "weather-match-count", "weather-match-box");
+  get("food-q").oninput = function(){ renderWordList(FOOD_DATA, "food-q", "food-all", "food-count", "food-matches", "food-match-count", "food-match-box"); };
+  renderWordList(FOOD_DATA, "food-q", "food-all", "food-count", "food-matches", "food-match-count", "food-match-box");
+  get("everyday-q").oninput = function(){ renderWordList(EVERYDAY_DATA, "everyday-q", "everyday-all", "everyday-count", "everyday-matches", "everyday-match-count", "everyday-match-box"); };
+  renderWordList(EVERYDAY_DATA, "everyday-q", "everyday-all", "everyday-count", "everyday-matches", "everyday-match-count", "everyday-match-box");
+  get("family-q").oninput = function(){ renderWordList(FAMILY_DATA, "family-q", "family-all", "family-count", "family-matches", "family-match-count", "family-match-box"); };
+  renderWordList(FAMILY_DATA, "family-q", "family-all", "family-count", "family-matches", "family-match-count", "family-match-box");
+  get("body-parts-q").oninput = function(){ renderWordList(BODY_PARTS_DATA, "body-parts-q", "body-parts-all", "body-parts-count", "body-parts-matches", "body-parts-match-count", "body-parts-match-box"); };
+  renderWordList(BODY_PARTS_DATA, "body-parts-q", "body-parts-all", "body-parts-count", "body-parts-matches", "body-parts-match-count", "body-parts-match-box");
   get("q").oninput = translate;
   get("q").onkeyup = translate;
   var sorted = DATA.slice().sort(function(a, b){
