@@ -456,7 +456,8 @@ function renderWordList(entries, queryId, allId, countId){
     var entry = sortedEntries[i];
     if (query && clean(entry.noongar).indexOf(query) === -1 && clean(entry.english).indexOf(query) === -1) continue;
     if (query) {
-      all.appendChild(makeChip(entry.noongar, entry.english, false));
+      var exactMatch = query === clean(entry.noongar) || query === clean(entry.english);
+      all.appendChild(makeChip(entry.noongar, entry.english, !exactMatch));
       count++;
       continue;
     }
