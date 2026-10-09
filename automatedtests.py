@@ -58,6 +58,14 @@ class AutomatedTests(unittest.TestCase):
         self.assertIn("Translator", translate_page)
         self.assertIn("FOOD_DATA", translate_page)
 
+    # Checks that slash-separated English terms are matched individually for yellow exact-match chips.
+    def test_slash_separated_english_terms_match_individually(self):
+        translate_page = (ROOT / "translate2.html").read_text(encoding="utf-8", errors="ignore")
+
+        self.assertIn('entry.english.split("/")', translate_page)
+        self.assertIn("query === clean(englishTerms[termIndex])", translate_page)
+        self.assertIn("matches.appendChild(makeChip(entry.noongar, entry.english, !exactMatch))", translate_page)
+
 
 if __name__ == "__main__":
     unittest.main()
