@@ -455,6 +455,11 @@ function renderWordList(entries, queryId, allId, countId){
   for (var i = 0; i < sortedEntries.length; i++) {
     var entry = sortedEntries[i];
     if (query && clean(entry.noongar).indexOf(query) === -1 && clean(entry.english).indexOf(query) === -1) continue;
+    if (query) {
+      all.appendChild(makeChip(entry.noongar, entry.english, false));
+      count++;
+      continue;
+    }
     var row = document.createElement("div");
     row.className = "row";
     var noongar = document.createElement("b");
