@@ -478,7 +478,15 @@ function renderWordList(entries, queryId, allId, countId, matchesId, matchCountI
     var entry = sortedEntries[i];
     var matchesQuery = query && clean(entry.noongar).indexOf(query) !== -1 || query && clean(entry.english).indexOf(query) !== -1;
     if (matchesQuery) {
-      var exactMatch = query === clean(entry.noongar) || query === clean(entry.english);
+      var englishTerms = entry.english.split("/");
+      var exactEnglishMatch = false;
+      for (var termIndex = 0; termIndex < englishTerms.length; termIndex++) {
+        if (query === clean(englishTerms[termIndex])) {
+          exactEnglishMatch = true;
+          break;
+        }
+      }
+      var exactMatch = query === clean(entry.noongar) || exactEnglishMatch;
       matches.appendChild(makeChip(entry.noongar, entry.english, !exactMatch));
       matchCount++;
     }
