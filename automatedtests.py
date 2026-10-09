@@ -79,12 +79,14 @@ class AutomatedTests(unittest.TestCase):
         self.assertEqual(stats_data["2021"]["South-Western WA"]["atsi"], 3.9)
         self.assertEqual(stats_data["2021"]["Perth"]["top"][0], ["Nyungar", 2.3])
 
-    # Checks that slash-separated English terms are matched individually for yellow exact-match chips.
+    # Checks that slash-separated English and Noongar terms are matched individually for yellow exact-match chips.
     def test_slash_separated_english_terms_match_individually(self):
         translate_page = (ROOT / "translate2.html").read_text(encoding="utf-8", errors="ignore")
 
         self.assertIn('entry.english.split("/")', translate_page)
         self.assertIn("query === clean(englishTerms[termIndex])", translate_page)
+        self.assertIn('entry.noongar.split("/")', translate_page)
+        self.assertIn("query === clean(noongarTerms[termIndex])", translate_page)
         self.assertIn("matches.appendChild(makeChip(entry.noongar, entry.english, !exactMatch))", translate_page)
 
 

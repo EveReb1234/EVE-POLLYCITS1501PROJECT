@@ -205,7 +205,7 @@ var DATA = [
 {en:"black cockatoo",nm:["manatj","ngoorlak"]},{en:"black duck",nm:["ngwonan"]},{en:"black snake",nm:["noorn"]},
 {en:"blow fly",nm:["noordoo"]},{en:"bobtail",nm:["yoorn"]},{en:"bull ant",nm:["kirlar","kirlirl"]},
 {en:"carpet snake",nm:["wakarl"]},{en:"caterpillar",nm:["ngana"]},{en:"cattle",nm:["boolok"]},
-{en:"cobbler",nm:["nyola"]},{en:"red-tailed cockatoo",nm:["yiibi"]},
+{en:"red-tailed cockatoo",nm:["yiibi"]},
 {en:"black and white-tailed cockatoo",nm:["ngoolyanak"]},{en:"cow",nm:["boolok","booliyak"]},
 {en:"crayfish",nm:["marron"]},{en:"crow",nm:["wardang"]},{en:"cuckoo",nm:["waaly","djilybarr"]},
 {en:"dingo",nm:["mokiny"]},{en:"dog",nm:["dwert"]},{en:"ducks",nm:["yerderap"]},{en:"eagle",nm:["waalitj"]},
@@ -284,14 +284,11 @@ var FAMILY_DATA = [
 
 var PLANTS_DATA = [
   {noongar:"bilara",english:"leaf (dead, dry)"},
-  {noongar:"djir al",english:"grass around the base of a jarrah tree"},
-  {noongar:"dj irap",english:"dandelion grass"},
-  {noongar:"djirp",english:"dandelion grass"},
+  {noongar:"dj irap / djirp",english:"dandelion grass"},
   {noongar:"wongoop",english:"native peach tree"},
   {noongar:"koorin",english:"medicine bush"},
   {noongar:"mardong?",english:"red gum tree"},
   {noongar:"ngarl",english:"sap from red gum tree"},
-  {noongar:"boodjari",english:"plant/food-related entry"},
   {noongar:"bonoo",english:"stick"},
   {noongar:"djaawit",english:"york gum"},
   {noongar:"kalbiri",english:"wild berries"},
@@ -386,6 +383,7 @@ var FOOD_DATA = [
   {noongar:"djol / djok / djoobak / djubak",english:"wild potato"},
   {noongar:"djabak",english:"edible roots"},
   {noongar:"djiyak",english:"food"},
+  {noongar:"nyola",english:"cobbler"},
   {noongar:"kaba nganiny",english:"drinking wine"},
   {noongar:"keba",english:"beer, wine"},
   {noongar:"kona",english:"bush potato"},
@@ -486,7 +484,15 @@ function renderWordList(entries, queryId, allId, countId, matchesId, matchCountI
           break;
         }
       }
-      var exactMatch = query === clean(entry.noongar) || exactEnglishMatch;
+      var noongarTerms = entry.noongar.split("/");
+      var exactNoongarMatch = false;
+      for (var termIndex = 0; termIndex < noongarTerms.length; termIndex++) {
+        if (query === clean(noongarTerms[termIndex])) {
+          exactNoongarMatch = true;
+          break;
+        }
+      }
+      var exactMatch = exactNoongarMatch || exactEnglishMatch;
       matches.appendChild(makeChip(entry.noongar, entry.english, !exactMatch));
       matchCount++;
     }
